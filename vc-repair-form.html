@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Videocraft Equipment Repairs</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --vc-orange: #F26522;
+      --vc-orange-dark: #d4541a;
+      --vc-orange-light: #fef0e7;
+      --vc-red: #C0392B;
+      --vc-black: #1a1a1a;
+      --vc-grey-dark: #3a3a3a;
+      --vc-grey-mid: #6b6b6b;
+      --vc-grey-light: #e8e8e8;
+      --vc-grey-bg: #f5f5f5;
+      --vc-white: #ffffff;
+      --radius: 8px;
+      --shadow: 0 2px 16px rgba(0,0,0,0.08);
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--vc-grey-bg);
+      color: var(--vc-black);
+      min-height: 100vh;
+    }
+
+    .site-header {
+      background: var(--vc-white);
+      border-bottom: 3px solid var(--vc-orange);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+      gap: 16px;
+    }
+
+    .logo-area img { height: 36px; width: auto; display: block; }
+    .logo-fallback { display: none; font-size: 1rem; font-weight: 700; color: var(--vc-orange); }
+
+    .header-nav { display: flex; gap: 4px; flex-shrink: 0; }
+
+    .nav-link {
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      color: var(--vc-grey-mid);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-link:hover { color: var(--vc-orange); background: var(--vc-orange-light); }
+    .nav-link.active { background: var(--vc-orange); color: white; }
+
+    .hero-band {
+      background: linear-gradient(135deg, var(--vc-orange) 0%, var(--vc-red) 100%);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-band::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .hero-band h1 { font-size: 1.6rem; font-weight: 600; color: white; letter-spacing: -0.5px; position: relative; }
+    .hero-band p { color: rgba(255,255,255,0.85); font-size: 0.875rem; margin-top: 6px; position: relative; }
+
+    .page-wrapper { max-width: 820px; margin: 2.5rem auto; padding: 0 1.5rem 4rem; }
+
+    .rule-banner {
+      background: var(--vc-orange-light);
+      border: 1.5px solid var(--vc-orange);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .rule-banner-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .rule-banner p { font-size: 0.875rem; color: var(--vc-orange-dark); line-height: 1.5; }
+    .rule-banner strong { font-weight: 600; }
+
+    .form-card {
+      background: var(--vc-white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section-header {
+      padding: 14px 24px;
+      background: var(--vc-grey-bg);
+      border-bottom: 1.5px solid var(--vc-grey-light);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-section-header h2 {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--vc-grey-mid);
+    }
+
+    .section-pill { width: 6px; height: 6px; border-radius: 50%; background: var(--vc-orange); flex-shrink: 0; }
+
+    .form-body { padding: 24px; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid .span-2 { grid-column: 1 / -1; }
+
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+    label { font-size: 0.8rem; font-weight: 600; color: var(--vc-grey-dark); }
+    label .required { color: var(--vc-orange); margin-left: 3px; }
+    label .hint { font-weight: 400; color: var(--vc-grey-mid); font-size: 0.75rem; margin-left: 4px; }
+
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid var(--vc-grey-light);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--vc-black);
+      background: var(--vc-white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input[type="text"]:focus,
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--vc-orange);
+      box-shadow: 0 0 0 3px rgba(242,101,34,0.1);
+    }
+
+    .field-error {
+      border-color: var(--vc-red) !important;
+      box-shadow: 0 0 0 3px rgba(192,57,43,0.1) !important;
+    }
+
+    textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+    textarea.tall { min-height: 120px; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b6b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+      cursor: pointer;
+    }
+
+    input.mono { font-family: 'DM Mono', monospace; font-size: 0.875rem; letter-spacing: 0.5px; }
+    .field-hint { font-size: 0.75rem; color: var(--vc-grey-mid); margin-top: 4px; }
+
+    .location-group { display: flex; gap: 8px; }
+    .location-group.group-error { outline: 2px solid var(--vc-red); border-radius: 6px; }
+    .location-option { flex: 1; }
+    .location-option input[type="radio"] { display: none; }
+
+    .location-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: 1.5px solid var(--vc-grey-light);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--vc-grey-mid);
+      transition: all 0.2s;
+      text-align: center;
+      letter-spacing: 0;
+    }
+
+    .location-option input[type="radio"]:checked + label { border-color: var(--vc-orange); background: var(--vc-orange-light); color: var(--vc-orange-dark); }
+    .location-option label:hover { border-color: var(--vc-orange); background: var(--vc-orange-light); }
+
+    .dept-group { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .dept-group.group-error { outline: 2px solid var(--vc-red); border-radius: 6px; }
+    .dept-option input[type="radio"] { display: none; }
+
+    .dept-option label {
+      display: block;
+      padding: 9px 10px;
+      border: 1.5px solid var(--vc-grey-light);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--vc-grey-mid);
+      text-align: center;
+      transition: all 0.2s;
+      letter-spacing: 0;
+    }
+
+    .dept-option input[type="radio"]:checked + label { border-color: var(--vc-orange); background: var(--vc-orange-light); color: var(--vc-orange-dark); }
+    .dept-option label:hover { border-color: var(--vc-orange); background: var(--vc-orange-light); }
+
+    .checkbox-group { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 10px 14px;
+      border: 1.5px solid var(--vc-grey-light);
+      border-radius: 6px;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .checkbox-item:hover,
+    .checkbox-item.checked { border-color: var(--vc-orange); background: var(--vc-orange-light); }
+    .checkbox-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--vc-orange); cursor: pointer; flex-shrink: 0; }
+    .checkbox-item span { font-size: 0.875rem; color: var(--vc-grey-dark); font-weight: 500; }
+
+    .confirm-box {
+      border: 1.5px solid var(--vc-grey-light);
+      border-radius: 6px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      user-select: none;
+    }
+
+    .confirm-box:hover,
+    .confirm-box.checked { border-color: var(--vc-orange); background: var(--vc-orange-light); }
+    .confirm-box.field-error { border-color: var(--vc-red) !important; box-shadow: 0 0 0 3px rgba(192,57,43,0.1) !important; background: #fef5f5 !important; }
+    .confirm-box input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--vc-orange); flex-shrink: 0; margin-top: 1px; cursor: pointer; }
+    .confirm-box-text strong { display: block; font-size: 0.875rem; font-weight: 600; color: var(--vc-black); margin-bottom: 2px; }
+    .confirm-box-text span { font-size: 0.8rem; color: var(--vc-grey-mid); }
+
+    .priority-row { display: flex; align-items: center; gap: 10px; }
+    .priority-row select { flex: 1; }
+
+    .priority-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--vc-grey-light);
+      flex-shrink: 0;
+      transition: background 0.25s;
+      border: 1.5px solid rgba(0,0,0,0.08);
+    }
+
+    .form-divider { height: 1px; background: var(--vc-grey-light); }
+
+    .asap-btn {
+      padding: 9px 16px;
+      border: 1.5px solid var(--vc-grey-light);
+      border-radius: 6px;
+      background: white;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--vc-grey-mid);
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .asap-btn:hover { border-color: var(--vc-orange); background: var(--vc-orange-light); color: var(--vc-orange-dark); }
+    .asap-btn.active { border-color: var(--vc-orange); background: var(--vc-orange-light); color: var(--vc-orange-dark); }
+
+    .submit-section {
+      padding: 20px 24px 24px;
+      border-top: 1.5px solid var(--vc-grey-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .submit-note { font-size: 0.8rem; color: var(--vc-grey-mid); line-height: 1.5; }
+    .submit-note strong { color: var(--vc-grey-dark); }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--vc-orange), var(--vc-red));
+      color: white;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 24px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      box-shadow: 0 2px 12px rgba(242,101,34,0.3);
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(242,101,34,0.4); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .success-overlay { display: none; text-align: center; padding: 60px 40px; }
+    .success-overlay.visible { display: block; }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--vc-orange), var(--vc-red));
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: white;
+    }
+
+    .success-overlay h2 { font-size: 1.4rem; font-weight: 600; color: var(--vc-black); margin-bottom: 8px; }
+    .success-overlay p { color: var(--vc-grey-mid); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+
+    .btn-new {
+      background: var(--vc-orange-light);
+      color: var(--vc-orange);
+      border: 1.5px solid var(--vc-orange);
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-new:hover { background: var(--vc-orange); color: white; }
+
+    .photo-drop-zone {
+      border: 2px dashed var(--vc-grey-light);
+      border-radius: 8px;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--vc-grey-bg);
+    }
+
+    .photo-drop-zone:hover,
+    .photo-drop-zone.drag-over {
+      border-color: var(--vc-orange);
+      background: var(--vc-orange-light);
+    }
+
+    .photo-drop-icon { font-size: 2rem; margin-bottom: 8px; }
+    .photo-drop-text { font-size: 0.875rem; font-weight: 500; color: var(--vc-grey-dark); margin-bottom: 4px; }
+    .photo-drop-hint { font-size: 0.75rem; color: var(--vc-grey-mid); }
+
+    .photo-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .photo-thumb {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1.5px solid var(--vc-grey-light);
+    }
+
+    .photo-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-thumb-remove {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 18px;
+      height: 18px;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .photo-thumb-remove:hover { background: var(--vc-red); }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid .span-2 { grid-column: 1; }
+      .dept-group { grid-template-columns: 1fr 1fr; }
+      .submit-section { flex-direction: column; align-items: stretch; }
+      .btn-submit { justify-content: center; width: 100%; }
+      .header-inner { gap: 8px; }
+      .nav-link { padding: 5px 10px; font-size: 0.78rem; }
+      .logo-area img { height: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <img
+          src="https://images.squarespace-cdn.com/content/v1/658b79558b2b53737a0865e1/f82a68b1-8518-4e92-a014-0aa645a25516/Videocraft+logo.png"
+          alt="Videocraft"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+        >
+        <span class="logo-fallback">Videocraft</span>
+      </div>
+      <nav class="header-nav">
+        <a href="#" class="nav-link active">Maintenance Form</a>
+        <a href="https://digistor2.sharepoint.com/:l:/r/sites/group/Lists/Equipment%20Repairs?e=lhDh9h" class="nav-link">Maintenance Status</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="hero-band">
+    <h1>Equipment Repair Form</h1>
+    <p>Complete all fields accurately — this populates the repairs spreadsheet directly.</p>
+  </div>
+
+  <div class="page-wrapper">
+
+    <div class="rule-banner">
+      <div class="rule-banner-icon">⚠️</div>
+      <p><strong>Before you submit:</strong> The item must be tested in-house and marked <strong>Out of Service</strong> in RentalPoint before submitting this form. Vague fault descriptions ("it's broken") will be returned. Be specific.</p>
+    </div>
+
+    <div class="form-card" id="formCard">
+
+      <!-- SUBMITTER -->
+      <div class="form-section-header">
+        <div class="section-pill"></div>
+        <h2>Submitter Details</h2>
+      </div>
+      <div class="form-body">
+        <div class="form-grid">
+
+          <div class="form-group span-2">
+            <label for="requestedBy">Requested By <span class="required">*</span></label>
+            <input type="text" id="requestedBy" placeholder="Your full name" autocomplete="name">
+          </div>
+
+          <div class="form-group">
+            <label>Location <span class="required">*</span></label>
+            <div class="location-group" id="locationGroup">
+              <div class="location-option">
+                <input type="radio" name="location" id="locMelbourne" value="Melbourne">
+                <label for="locMelbourne">🏙 Melbourne</label>
+              </div>
+              <div class="location-option">
+                <input type="radio" name="location" id="locSydney" value="Sydney">
+                <label for="locSydney">🌉 Sydney</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Department <span class="required">*</span></label>
+            <div class="dept-group" id="deptGroup">
+              <div class="dept-option">
+                <input type="radio" name="department" id="deptRentals" value="Rentals">
+                <label for="deptRentals">Rentals</label>
+              </div>
+              <div class="dept-option">
+                <input type="radio" name="department" id="deptEngineering" value="Engineering">
+                <label for="deptEngineering">Engineering</label>
+              </div>
+              <div class="dept-option">
+                <input type="radio" name="department" id="deptTechServices" value="Tech Services">
+                <label for="deptTechServices">Tech Services</label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- ASSET -->
+      <div class="form-section-header">
+        <div class="section-pill"></div>
+        <h2>Asset Information</h2>
+      </div>
+      <div class="form-body">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="barcode">Barcode <span class="required">*</span></label>
+            <input type="text" id="barcode" class="mono" placeholder="VC-XXXXX" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label for="serialNumber">Serial Number</label>
+            <input type="text" id="serialNumber" class="mono" placeholder="Manufacturer serial" autocomplete="off">
+          </div>
+
+          <div class="form-group">
+            <label for="manufacturer">Manufacturer</label>
+            <input type="text" id="manufacturer" placeholder="e.g. Sony, Canon, Blackmagic">
+          </div>
+
+          <div class="form-group">
+            <label for="model">Model</label>
+            <input type="text" id="model" placeholder="e.g. PXW-FX9">
+          </div>
+
+          <div class="form-group span-2">
+            <label for="jobOrigin">Job / Booking Origin <span class="hint">(if applicable)</span></label>
+            <input type="text" id="jobOrigin" placeholder="Which job or booking did this come from?">
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- FAULT -->
+      <div class="form-section-header">
+        <div class="section-pill"></div>
+        <h2>Fault Details</h2>
+      </div>
+      <div class="form-body">
+        <div class="form-grid">
+
+          <div class="form-group span-2">
+            <label>Test Status <span class="required">*</span></label>
+            <div class="dept-group" id="testStatusGroup" style="grid-template-columns: repeat(3, 1fr);">
+              <div class="dept-option">
+                <input type="radio" name="testStatus" id="testConfirmed" value="Tested &amp; Confirmed">
+                <label for="testConfirmed">✅ Tested &amp; Confirmed</label>
+              </div>
+              <div class="dept-option">
+                <input type="radio" name="testStatus" id="testRequired" value="Requires Testing">
+                <label for="testRequired">🔧 Requires Testing</label>
+              </div>
+              <div class="dept-option">
+                <input type="radio" name="testStatus" id="testClientReported" value="Client Reported Only">
+                <label for="testClientReported">📋 Client Reported Only</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group span-2">
+            <label for="faultDescription">Description of Fault <span class="required">*</span></label>
+            <textarea id="faultDescription" class="tall" placeholder="Describe the fault specifically. What symptoms? What conditions trigger it? What was the item's setup when used by the client? What have you tested? 'It's broken' is not acceptable."></textarea>
+            <div class="field-hint">Be specific enough for a repair technician to reproduce the fault.</div>
+          </div>
+
+          <div class="form-group span-2">
+            <label for="workRequired">Work Required</label>
+            <textarea id="workRequired" placeholder="e.g. Send off for repair, internal VC repair, order spare parts, firmware update attempted…"></textarea>
+          </div>
+
+          <div class="form-group span-2">
+            <label>Type of Repair Required</label>
+            <div class="checkbox-group">
+              <div class="checkbox-item" id="ciInternal" onclick="toggleCheckbox('repairInternal', 'ciInternal')">
+                <input type="checkbox" id="repairInternal" value="Internal VC Assessment/Repair" tabindex="-1">
+                <span>🔧 Internal VC Assessment / Repair</span>
+              </div>
+              <div class="checkbox-item" id="ciExternal" onclick="toggleCheckbox('repairExternal', 'ciExternal')">
+                <input type="checkbox" id="repairExternal" value="Send off for repair" tabindex="-1">
+                <span>📦 Send Off for Repair (external supplier)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group span-2">
+            <label>Chargeable to Client? <span class="required">*</span></label>
+            <div class="location-group" id="chargeableGroup" style="margin-bottom:8px;">
+              <div class="location-option">
+                <input type="radio" name="clientChargeableYN" id="chargeableYes" value="Yes" onchange="toggleChargeableDetails()">
+                <label for="chargeableYes">✅ Yes</label>
+              </div>
+              <div class="location-option">
+                <input type="radio" name="clientChargeableYN" id="chargeableNo" value="No" onchange="toggleChargeableDetails()">
+                <label for="chargeableNo">❌ No</label>
+              </div>
+            </div>
+            <textarea id="clientChargeable" placeholder="Briefly describe the damage and which job / client it came from."></textarea>
+          </div>
+
+          <div class="form-group span-2" id="invoiceDetailsGroup" style="display:none;">
+            <label for="invoiceDetails">Freshdesk Ticket / Client Invoice Details <span class="required">*</span></label>
+            <textarea id="invoiceDetails" placeholder="Freshdesk ticket number, client name, contact email or phone — anything needed to raise an invoice for this repair."></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- WARRANTY -->
+      <div class="form-section-header">
+        <div class="section-pill"></div>
+        <h2>Warranty</h2>
+      </div>
+      <div class="form-body">
+        <div class="form-grid">
+
+          <div class="form-group span-2">
+            <label>Is this item under warranty? <span class="hint">(if known)</span></label>
+            <div class="location-group" id="warrantyGroup">
+              <div class="location-option">
+                <input type="radio" name="underWarranty" id="warrantyYes" value="Yes" onchange="toggleWarrantyDetails()">
+                <label for="warrantyYes">✅ Yes</label>
+              </div>
+              <div class="location-option">
+                <input type="radio" name="underWarranty" id="warrantyNo" value="No" onchange="toggleWarrantyDetails()">
+                <label for="warrantyNo">❌ No</label>
+              </div>
+              <div class="location-option">
+                <input type="radio" name="underWarranty" id="warrantyUnknown" value="Unknown" onchange="toggleWarrantyDetails()">
+                <label for="warrantyUnknown">❓ Unknown</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group span-2" id="warrantyDetailsGroup" style="display:none;">
+            <label for="warrantyDetails">Warranty Details</label>
+            <textarea id="warrantyDetails" placeholder="Supplier name, warranty contact, purchase date, warranty expiry, any RMA or claim reference numbers."></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- PHOTOS -->
+      <div class="form-section-header">
+        <div class="section-pill"></div>
+        <h2>Photos <span style="font-weight:400;color:var(--grey-mid,#6b6b6b);font-size:0.75rem;letter-spacing:0;text-transform:none;margin-left:6px;">Optional</span></h2>
+      </div>
+      <div class="form-body">
+        <div class="form-group">
+          <label for="photoUpload">Upload Photos <span class="hint">(JPEG only, up to 10 files, 5MB each)</span></label>
+          <div class="photo-drop-zone" id="photoDropZone" onclick="document.getElementById('photoUpload').click()">
+            <div class="photo-drop-icon">📷</div>
+            <div class="photo-drop-text">Click to select photos or drag and drop here</div>
+            <div class="photo-drop-hint">JPEG files only — useful for insurance claims and documenting damage</div>
+            <input type="file" id="photoUpload" accept="image/jpeg,.jpg,.jpeg" multiple style="display:none;" onchange="handlePhotoSelect(this)">
+          </div>
+          <div id="photoPreview" class="photo-preview-grid"></div>
+          <div id="photoError" class="field-hint" style="color:#C0392B;display:none;"></div>
+        </div>
+      </div>
+
+      <div class="form-divider"></div>
+
+      <!-- PRIORITY -->
+      <div class="form-section-header">
+        <div class="section-pill"></div>
+        <h2>Priority &amp; Timing</h2>
+      </div>
+      <div class="form-body">
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="priority">Priority <span class="required">*</span></label>
+            <div class="priority-row">
+              <select id="priority">
+                <option value="" disabled selected>Select priority…</option>
+                <option value="Low">Low — not urgent, no upcoming bookings affected</option>
+                <option value="Medium">Medium — needs attention but not blocking anything imminent</option>
+                <option value="High">High — affecting upcoming bookings or high value item</option>
+                <option value="ASAP">ASAP — needed immediately, job is impacted right now</option>
+                <option value="By Date">By Date (see below)</option>
+              </select>
+              <div class="priority-dot" id="priorityDot"></div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="requiredByDate">Required By Date <span class="hint">(if "By Date" selected)</span></label>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button type="button" id="asapBtn" class="asap-btn" onclick="setASAP()">ASAP</button>
+              <input type="date" id="requiredByDate" name="requiredByDate" style="flex:1;">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="submit-section">
+        <div class="submit-note">
+          <strong>What happens next:</strong> Jen will be notified by email and will action dispatch within 24 hours. The item must already be marked Out of Service in RentalPoint.
+        </div>
+        <button type="button" class="btn-submit" id="submitBtn" onclick="handleSubmit()">
+          Submit Repair Form →
+        </button>
+      </div>
+
+    </div>
+
+    <div class="form-card success-overlay" id="successOverlay">
+      <div class="success-icon">✓</div>
+      <h2>Repair Logged Successfully</h2>
+      <p>The repair has been recorded and Jen has been notified by email.<br>Dispatch will be actioned within 24 hours.<br><br>Ensure the item is marked <strong>Out of Service</strong> in RentalPoint.</p>
+      <button class="btn-new" onclick="resetForm()">Submit Another Repair</button>
+    </div>
+
+  </div>
+
+  <script>
+    const POWER_AUTOMATE_URL = 'https://hook.eu1.make.com/tand823v5vi82ntvfvsrj0qj4e1x14qt';
+
+    const priorityColours = {
+      'ASAP':   '#C0392B',
+      'High':   '#E67E22',
+      'Medium': '#F39C12',
+      'Low':    '#27AE60',
+      'By Date':'#2980B9'
+    };
+
+    document.getElementById('priority').addEventListener('change', function () {
+      document.getElementById('priorityDot').style.background = priorityColours[this.value] || 'var(--vc-grey-light)';
+      this.classList.remove('field-error');
+      // Clear ASAP button state if priority changed manually
+      document.getElementById('asapBtn').classList.remove('active');
+    });
+
+    // Clear ASAP button state when date is manually changed
+    document.getElementById('requiredByDate').addEventListener('change', function () {
+      if (this.value) {
+        document.getElementById('asapBtn').classList.remove('active');
+      }
+    });
+
+    function toggleChargeableDetails() {
+      const isYes = document.getElementById('chargeableYes').checked;
+      const group = document.getElementById('invoiceDetailsGroup');
+      group.style.display = isYes ? '' : 'none';
+      if (!isYes) document.getElementById('invoiceDetails').value = '';
+    }
+
+    function toggleWarrantyDetails() {
+      const isYes = document.getElementById('warrantyYes').checked;
+      const group = document.getElementById('warrantyDetailsGroup');
+      group.style.display = isYes ? '' : 'none';
+      if (!isYes) document.getElementById('warrantyDetails').value = '';
+    }
+
+    function setASAP() {
+      const asapBtn = document.getElementById('asapBtn');
+      const input   = document.getElementById('requiredByDate');
+      input.value   = '';
+      asapBtn.classList.add('active');
+      document.getElementById('priority').value = 'ASAP';
+      document.getElementById('priorityDot').style.background = '#E67E22';
+    }
+
+    function toggleConfirm() {
+      const cb  = document.getElementById('testedConfirm');
+      const box = document.getElementById('confirmBox');
+      cb.checked = !cb.checked;
+      box.classList.toggle('checked', cb.checked);
+      if (cb.checked) box.classList.remove('field-error');
+    }
+
+    function toggleCheckbox(cbId, itemId) {
+      const cb   = document.getElementById(cbId);
+      const item = document.getElementById(itemId);
+      cb.checked = !cb.checked;
+      item.classList.toggle('checked', cb.checked);
+    }
+
+    ['requestedBy', 'barcode', 'faultDescription'].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener('input', () => el.classList.remove('field-error'));
+    });
+
+    document.querySelectorAll('input[name="location"]').forEach(r =>
+      r.addEventListener('change', () => document.getElementById('locationGroup').classList.remove('group-error'))
+    );
+
+    document.querySelectorAll('input[name="department"]').forEach(r =>
+      r.addEventListener('change', () => document.getElementById('deptGroup').classList.remove('group-error'))
+    );
+
+    function clearAllErrors() {
+      document.querySelectorAll('.field-error').forEach(el => el.classList.remove('field-error'));
+      document.getElementById('locationGroup').classList.remove('group-error');
+      document.getElementById('deptGroup').classList.remove('group-error');
+      document.getElementById('chargeableGroup').classList.remove('group-error');
+      document.getElementById('testStatusGroup').classList.remove('group-error');
+    }
+
+    async function handleSubmit() {
+      clearAllErrors();
+
+      let valid   = true;
+      let firstEl = null;
+
+      function fail(el) {
+        el.classList.add('field-error');
+        if (!firstEl) firstEl = el;
+        valid = false;
+      }
+
+      const requestedBy = document.getElementById('requestedBy');
+      const barcode     = document.getElementById('barcode');
+      const faultDesc   = document.getElementById('faultDescription');
+      const priority    = document.getElementById('priority');
+      const locGroup    = document.getElementById('locationGroup');
+      const deptGroup   = document.getElementById('deptGroup');
+
+      if (!requestedBy.value.trim()) fail(requestedBy);
+      if (!barcode.value.trim())     fail(barcode);
+      if (!faultDesc.value.trim())   fail(faultDesc);
+      if (!priority.value)           fail(priority);
+
+      // Test status required
+      const testStatusChecked = document.querySelector('input[name="testStatus"]:checked');
+      if (!testStatusChecked) {
+        const tg = document.getElementById('testStatusGroup');
+        tg.classList.add('group-error');
+        if (!firstEl) firstEl = tg;
+        valid = false;
+      }
+
+      document.querySelectorAll('input[name="testStatus"]').forEach(r =>
+        r.addEventListener('change', () => document.getElementById('testStatusGroup').classList.remove('group-error'))
+      );
+
+      // Chargeable to client required
+      const chargeableChecked = document.querySelector('input[name="clientChargeableYN"]:checked');
+      if (!chargeableChecked) {
+        const cg = document.getElementById('chargeableGroup');
+        cg.classList.add('group-error');
+        if (!firstEl) firstEl = cg;
+        valid = false;
+      }
+
+      // Invoice details required if chargeable = Yes
+      if (chargeableChecked && chargeableChecked.value === 'Yes') {
+        const invoiceDetails = document.getElementById('invoiceDetails');
+        if (!invoiceDetails.value.trim()) { fail(invoiceDetails); }
+      }
+
+      const locationChecked = document.querySelector('input[name="location"]:checked');
+      if (!locationChecked) {
+        locGroup.classList.add('group-error');
+        if (!firstEl) firstEl = locGroup;
+        valid = false;
+      }
+
+      const deptChecked = document.querySelector('input[name="department"]:checked');
+      if (!deptChecked) {
+        deptGroup.classList.add('group-error');
+        if (!firstEl) firstEl = deptGroup;
+        valid = false;
+      }
+
+      if (!valid) {
+        firstEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      const formData = {
+        requestedBy:      requestedBy.value.trim(),
+        location:         locationChecked.value,
+        department:       deptChecked.value,
+        barcode:          barcode.value.trim(),
+        serialNumber:     document.getElementById('serialNumber').value.trim(),
+        manufacturer:     document.getElementById('manufacturer').value.trim(),
+        model:            document.getElementById('model').value.trim(),
+        jobOrigin:        document.getElementById('jobOrigin').value.trim(),
+        testedConfirmed:  testStatusChecked ? testStatusChecked.value : 'Not specified',
+        faultDescription: faultDesc.value.trim(),
+        workRequired:     document.getElementById('workRequired').value.trim(),
+        repairTypes:      [...document.querySelectorAll('#repairInternal:checked, #repairExternal:checked')].map(c => c.value).join(', ') || 'Not specified',
+        clientChargeable: chargeableChecked ? chargeableChecked.value : 'Not specified',
+        clientChargeableDetails: document.getElementById('clientChargeable').value.trim() || 'N/A',
+        invoiceDetails:   document.getElementById('invoiceDetails').value.trim() || 'N/A',
+        underWarranty:    (document.querySelector('input[name="underWarranty"]:checked') || {}).value || 'Not specified',
+        warrantyDetails:  document.getElementById('warrantyDetails').value.trim() || 'N/A',
+        priority:         priority.value,
+        requiredByDate:   document.getElementById('requiredByDate').value || 'N/A',
+        submittedAt:      new Date().toLocaleString('en-AU', { timeZone: 'Australia/Melbourne' })
+      };
+
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner"></span> Submitting…';
+
+      try {
+        if (POWER_AUTOMATE_URL !== 'YOUR_POWER_AUTOMATE_URL_HERE') {
+          const res = await fetch(POWER_AUTOMATE_URL, {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify(formData)
+          });
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        } else {
+          console.log('📋 Repair form (dev mode):', formData);
+          await new Promise(r => setTimeout(r, 900));
+        }
+
+        document.getElementById('formCard').style.display = 'none';
+        document.getElementById('successOverlay').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // Upload photos if any were selected
+        if (selectedPhotos.length > 0) {
+          uploadPhotosToSharePoint(formData.barcode, formData.submittedAt);
+        }
+
+      } catch (err) {
+        console.error('Submission failed:', err);
+        btn.disabled = false;
+        btn.innerHTML = 'Submit Repair Form →';
+        alert('Submission failed. Please try again or contact Jen directly.');
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('formCard').style.display = '';
+      document.getElementById('successOverlay').classList.remove('visible');
+
+      document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(f => f.value = '');
+      document.getElementById('priority').value = '';
+      document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(f => f.checked = false);
+
+      document.getElementById('confirmBox').classList.remove('checked', 'field-error');
+      document.querySelectorAll('.checkbox-item').forEach(el => el.classList.remove('checked'));
+      document.getElementById('priorityDot').style.background = 'var(--vc-grey-light)';
+      document.getElementById('asapBtn').classList.remove('active');
+      document.getElementById('invoiceDetailsGroup').style.display = 'none';
+      document.getElementById('warrantyDetailsGroup').style.display = 'none';
+      document.getElementById('chargeableGroup').classList.remove('group-error');
+      document.getElementById('testStatusGroup').classList.remove('group-error');
+      selectedPhotos = [];
+      renderPhotoPreview();
+      document.getElementById('photoError').style.display = 'none';
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = 'Submit Repair Form →';
+
+      clearAllErrors();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    // ── PHOTO HANDLING ────────────────────────────────────────────────────
+    let selectedPhotos = [];
+
+    function handlePhotoSelect(input) {
+      const errorEl = document.getElementById('photoError');
+      errorEl.style.display = 'none';
+
+      const files = Array.from(input.files);
+      const total = selectedPhotos.length + files.length;
+
+      if (total > 10) {
+        errorEl.textContent = `Too many files — maximum 10 photos. You currently have ${selectedPhotos.length} selected.`;
+        errorEl.style.display = 'block';
+        input.value = '';
+        return;
+      }
+
+      for (const file of files) {
+        if (file.size > 5 * 1024 * 1024) {
+          errorEl.textContent = `${file.name} is too large — maximum 5MB per file.`;
+          errorEl.style.display = 'block';
+          input.value = '';
+          return;
+        }
+        if (!file.type.match('image/jpeg')) {
+          errorEl.textContent = `${file.name} is not a JPEG — please use .jpg or .jpeg files only.`;
+          errorEl.style.display = 'block';
+          input.value = '';
+          return;
+        }
+        selectedPhotos.push(file);
+      }
+
+      input.value = '';
+      renderPhotoPreview();
+    }
+
+    function renderPhotoPreview() {
+      const grid = document.getElementById('photoPreview');
+      grid.innerHTML = '';
+      selectedPhotos.forEach((file, index) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'photo-thumb';
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(file);
+        const btn = document.createElement('button');
+        btn.className = 'photo-thumb-remove';
+        btn.innerHTML = '✕';
+        btn.onclick = (e) => { e.stopPropagation(); removePhoto(index); };
+        thumb.appendChild(img);
+        thumb.appendChild(btn);
+        grid.appendChild(thumb);
+      });
+    }
+
+    function removePhoto(index) {
+      selectedPhotos.splice(index, 1);
+      renderPhotoPreview();
+    }
+
+    // Drag and drop
+    const dropZone = document.getElementById('photoDropZone');
+    dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('drag-over'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+    dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('drag-over');
+      const dt = { files: e.dataTransfer.files };
+      handlePhotoSelect(dt);
+    });
+
+    async function uploadPhotosToSharePoint(barcode, submittedAt) {
+      if (selectedPhotos.length === 0) return;
+
+      // Format folder name: BARCODE-DDMMYYYY
+      const date = new Date();
+      const dateStr = `${String(date.getDate()).padStart(2,'0')}${String(date.getMonth()+1).padStart(2,'0')}${date.getFullYear()}`;
+      const folderName = `${barcode.replace(/[^a-zA-Z0-9-]/g, '')}-${dateStr}`;
+      const basePath = `05. Rentals/.Repairs/photos/${folderName}`;
+
+      // Upload each photo via Make webhook (separate webhook for files)
+      // NOTE: Photos are uploaded as base64 via a separate Make scenario
+      // See setup guide for the Make file upload scenario configuration
+      for (const photo of selectedPhotos) {
+        const reader = new FileReader();
+        await new Promise((resolve) => {
+          reader.onload = async (e) => {
+            const base64 = e.target.result.split(',')[1];
+            await fetch(POWER_AUTOMATE_URL, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                _uploadType: 'photo',
+                fileName: photo.name,
+                fileBase64: base64,
+                folderPath: basePath,
+                barcode: barcode
+              })
+            });
+            resolve();
+          };
+          reader.readAsDataURL(photo);
+        });
+      }
+    }
+    // ── END PHOTO HANDLING ────────────────────────────────────────────────
+
+  </script>
+
+</body>
+</html>
