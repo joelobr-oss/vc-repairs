@@ -772,6 +772,7 @@
 
   <script>
     const POWER_AUTOMATE_URL = 'https://hook.eu1.make.com/tand823v5vi82ntvfvsrj0qj4e1x14qt';
+    const PHOTO_UPLOAD_URL = 'https://hook.eu1.make.com/c4rxdgox7bno8oppa78qw3qxvl74ixmg';
 
     const priorityColours = {
       'ASAP':   '#C0392B',
@@ -1097,7 +1098,7 @@
         await new Promise((resolve) => {
           reader.onload = async (e) => {
             const base64 = e.target.result.split(',')[1];
-            await fetch(POWER_AUTOMATE_URL, {
+            await fetch(PHOTO_UPLOAD_URL, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
