@@ -991,7 +991,6 @@
       document.getElementById('priority').value = '';
       document.querySelectorAll('input[type="checkbox"], input[type="radio"]').forEach(f => f.checked = false);
 
-      document.getElementById('confirmBox').classList.remove('checked', 'field-error');
       document.querySelectorAll('.checkbox-item').forEach(el => el.classList.remove('checked'));
       document.getElementById('priorityDot').style.background = 'var(--vc-grey-light)';
       document.getElementById('asapBtn').classList.remove('active');
@@ -1000,8 +999,9 @@
       document.getElementById('chargeableGroup').classList.remove('group-error');
       document.getElementById('testStatusGroup').classList.remove('group-error');
       selectedPhotos = [];
-      renderPhotoPreview();
+      document.getElementById('photoPreview').innerHTML = '';
       document.getElementById('photoError').style.display = 'none';
+      document.getElementById('photoUpload').value = '';
 
       const submitBtn = document.getElementById('submitBtn');
       submitBtn.disabled = false;
@@ -1103,10 +1103,11 @@
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 _uploadType: 'photo',
-                fileName: photo.name,
+                fileName: `${barcode.replace(/[^a-zA-Z0-9-]/g, '')}-${photo.name}`,
                 fileBase64: base64,
                 folderPath: basePath,
-                barcode: barcode
+                barcode: barcode,
+                folderName: folderName
               })
             });
             resolve();
