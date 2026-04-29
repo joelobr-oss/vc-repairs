@@ -1095,7 +1095,8 @@
           reader.onload = async (e) => {
             const base64 = e.target.result.split(',')[1];
             const cleanBarcode = barcode.replace(/[^a-zA-Z0-9-]/g, '');
-            const stampedName = `${cleanBarcode}-${dateStr}-${photo.name}`;
+            const cleanName = photo.name.replace(/\.(jpeg|jpg)$/i, '.jpg');
+            const stampedName = `${cleanBarcode}-${dateStr}-${cleanName}`;
             await fetch(PHOTO_UPLOAD_URL, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
