@@ -1084,26 +1084,24 @@
     async function uploadPhotosToSharePoint(barcode, submittedAt) {
       if (selectedPhotos.length === 0) return;
 
-      // Format folder name: BARCODE-DDMMYYYY
       const date = new Date();
       const dateStr = `${String(date.getDate()).padStart(2,'0')}${String(date.getMonth()+1).padStart(2,'0')}${date.getFullYear()}`;
       const folderName = `${barcode.replace(/[^a-zA-Z0-9-]/g, '')}-${dateStr}`;
       const basePath = `05. Rentals/.Repairs/photos/${folderName}`;
 
-      // Upload each photo via Make webhook (separate webhook for files)
-      // NOTE: Photos are uploaded as base64 via a separate Make scenario
-      // See setup guide for the Make file upload scenario configuration
       for (const photo of selectedPhotos) {
         const reader = new FileReader();
         await new Promise((resolve) => {
           reader.onload = async (e) => {
             const base64 = e.target.result.split(',')[1];
+            const cleanBarcode = barcode.replace(/[^a-zA-Z0-9-]/g, '');
+            const stampedName = `${cleanBarcode}-${dateStr}-${photo.name}`;
             await fetch(PHOTO_UPLOAD_URL, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
                 _uploadType: 'photo',
-                fileName: `${barcode.replace(/[^a-zA-Z0-9-]/g, '')}-${photo.name}`,
+                fileName: stampedName,
                 fileBase64: base64,
                 folderPath: basePath,
                 barcode: barcode,
