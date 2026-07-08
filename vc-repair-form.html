@@ -762,7 +762,7 @@
 
       <div class="submit-section">
         <div class="submit-note">
-          <strong>What happens next:</strong> Jen will be notified by email and will action dispatch within 24 hours. The item must already be marked Out of Service in RentalPoint.
+          <strong>What happens next:</strong> The Operations Coordinator will be notified by email and will action dispatch within 24 hours. The item must already be marked Out of Service in RentalPoint.
         </div>
         <button type="button" class="btn-submit" id="submitBtn" onclick="handleSubmit()">
           Submit Repair Form →
@@ -778,7 +778,7 @@
         <span class="repair-number-label">Repair Reference</span>
         <span class="repair-number-value" id="repairNumberValue"></span>
       </div>
-      <p>The repair has been recorded and Jen has been notified by email.<br>Dispatch will be actioned within 24 hours.<br><br>Ensure the item is marked <strong>Out of Service</strong> in RentalPoint.</p>
+      <p>The repair has been recorded and the Operations Coordinator has been notified by email.<br>Dispatch will be actioned within 24 hours.<br><br>Ensure the item is marked <strong>Out of Service</strong> in RentalPoint.</p>
       <button class="btn-new" onclick="resetForm()">Submit Another Repair</button>
     </div>
 
@@ -999,7 +999,7 @@
         console.error('Submission failed:', err);
         btn.disabled = false;
         btn.innerHTML = 'Submit Repair Form →';
-        alert('Submission failed. Please try again or contact Jen directly.');
+        alert('Submission failed. Please try again or contact the Operations Coordinator directly.');
       }
     }
 
