@@ -373,6 +373,20 @@
     .success-overlay h2 { font-size: 1.4rem; font-weight: 600; color: var(--vc-black); margin-bottom: 8px; }
     .success-overlay p { color: var(--vc-grey-mid); font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
 
+    .repair-number-badge {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      background: var(--vc-orange-light);
+      border: 1.5px solid var(--vc-orange);
+      border-radius: var(--radius);
+      padding: 10px 24px;
+      margin: 4px auto 20px;
+    }
+    .repair-number-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--vc-orange-dark); }
+    .repair-number-value { font-family: 'DM Mono', monospace; font-size: 1.3rem; font-weight: 500; color: var(--vc-black); letter-spacing: 1px; }
+
     .btn-new {
       background: var(--vc-orange-light);
       color: var(--vc-orange);
@@ -760,6 +774,10 @@
     <div class="form-card success-overlay" id="successOverlay">
       <div class="success-icon">✓</div>
       <h2>Repair Logged Successfully</h2>
+      <div class="repair-number-badge">
+        <span class="repair-number-label">Repair Reference</span>
+        <span class="repair-number-value" id="repairNumberValue"></span>
+      </div>
       <p>The repair has been recorded and Jen has been notified by email.<br>Dispatch will be actioned within 24 hours.<br><br>Ensure the item is marked <strong>Out of Service</strong> in RentalPoint.</p>
       <button class="btn-new" onclick="resetForm()">Submit Another Repair</button>
     </div>
@@ -950,6 +968,8 @@
       btn.innerHTML = '<span class="spinner"></span> Submitting…';
 
       try {
+        let repairNumber = '';
+
         if (POWER_AUTOMATE_URL !== 'YOUR_POWER_AUTOMATE_URL_HERE') {
           const res = await fetch(POWER_AUTOMATE_URL, {
             method:  'POST',
@@ -957,11 +977,15 @@
             body:    JSON.stringify(formData)
           });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const result = await res.json();
+          repairNumber = result.repairNumber || '';
         } else {
           console.log('📋 Repair form (dev mode):', formData);
           await new Promise(r => setTimeout(r, 900));
+          repairNumber = 'VCRM000000';
         }
 
+        document.getElementById('repairNumberValue').textContent = repairNumber;
         document.getElementById('formCard').style.display = 'none';
         document.getElementById('successOverlay').classList.add('visible');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -982,6 +1006,7 @@
     function resetForm() {
       document.getElementById('formCard').style.display = '';
       document.getElementById('successOverlay').classList.remove('visible');
+      document.getElementById('repairNumberValue').textContent = '';
 
       document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(f => f.value = '');
       document.getElementById('priority').value = '';
